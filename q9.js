@@ -1,0 +1,14 @@
+let x=10;
+let a = 1;
+let b = 2;
+let c = 3;
+const pi = 3.14159;
+let userName = "John";
+let itemCount = 0;
+console.log(x);
+console.log(b);
+console.log(a);
+console.log(c);
+console.log(pi);
+console.log(userName);
+console.log(itemCount);

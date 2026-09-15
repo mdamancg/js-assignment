@@ -1,0 +1,18 @@
+let a=10;
+let b="10";
+let c=true;
+let d;
+let e=null;
+let f={name:"Aman"};
+let g=[1,2,3];
+let h=function() {return 5;};
+
+console.log("a:",a,"Type of a:",typeof a);
+console.log("b:",b,"Type of b:",typeof b);
+console.log("c:",c,"Type of c:",typeof c);
+console.log("d:",d,"Type of d:",typeof d);
+console.log("e:",e,"Type of e:",typeof e);
+console.log("f:",f,"Type of f:",typeof f);
+console.log("g:",g,"Type of g:",typeof g);
+console.log("h:",h,"Type of h:",typeof h);
+
