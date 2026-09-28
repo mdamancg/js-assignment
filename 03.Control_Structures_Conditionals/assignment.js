@@ -128,11 +128,12 @@ if(num%100==0){
 
 //9
 
-// let number=9;
-// if(number>=9 && number>10){
-//     console.log("Number is gretear than both 9 and 10")
+// let number1=9;
+// let number2=10
+// if(number1>number2){
+//     console.log("Number 1  is greatrer than number 2")
 // }else{
-//     console.log("Number is smaller than 9 and 10!!!!")
+//     console.log("Number 2 is greater than number 1");
 // }
 
 //10
