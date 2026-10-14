@@ -1,0 +1,2523 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fruit Business Manager</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial, sans-serif;
+    background:#f3f6f4;
+    color:#17231b;
+    font-size:18px;
+}
+
+.header{
+    background:#176b3a;
+    color:white;
+    padding:22px 35px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:bold;
+}
+
+.container{
+    width:94%;
+    max-width:1450px;
+    margin:25px auto;
+}
+
+.section{
+    background:white;
+    padding:28px;
+    border-radius:18px;
+    margin-bottom:25px;
+    box-shadow:0 3px 14px rgba(0,0,0,.07);
+}
+
+.section-title{
+    font-size:27px;
+    color:#176b3a;
+    font-weight:bold;
+    margin-bottom:20px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+    margin-bottom:25px;
+}
+
+.card{
+    background:white;
+    padding:22px;
+    border-radius:16px;
+    border-left:6px solid #176b3a;
+    box-shadow:0 3px 12px rgba(0,0,0,.08);
+}
+
+.card h3{
+    color:#5b665f;
+    font-size:18px;
+    margin-bottom:12px;
+}
+
+.number{
+    font-size:30px;
+    font-weight:bold;
+}
+
+/* PERIOD REPORT */
+
+.period-buttons{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.period-buttons button{
+    background:#e8f3ec;
+    color:#176b3a;
+}
+
+.period-buttons button.active{
+    background:#176b3a;
+    color:white;
+}
+
+.report-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+}
+
+.report-card{
+    background:#f8faf9;
+    border:2px solid #dce8df;
+    border-radius:14px;
+    padding:20px;
+}
+
+.report-card h3{
+    font-size:17px;
+    color:#59655d;
+    margin-bottom:10px;
+}
+
+.report-number{
+    font-size:27px;
+    font-weight:bold;
+    color:#176b3a;
+}
+
+/* FORM */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.input-group{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+}
+
+label{
+    font-weight:bold;
+}
+
+input,select{
+    padding:15px;
+    border:2px solid #ccd6cf;
+    border-radius:10px;
+    font-size:18px;
+    width:100%;
+    background:white;
+}
+
+input:focus,select:focus{
+    outline:none;
+    border-color:#176b3a;
+}
+
+button{
+    border:0;
+    border-radius:10px;
+    padding:14px 20px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    background:#176b3a;
+    color:white;
+}
+
+button:hover{
+    background:#0e512b;
+}
+
+.full-btn{
+    width:100%;
+    margin-top:20px;
+}
+
+/* TABLE */
+
+.table-wrapper{
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:14px;
+    border-bottom:1px solid #ddd;
+    text-align:left;
+    white-space:nowrap;
+}
+
+th{
+    background:#e8f3ec;
+    color:#174f2f;
+}
+
+.delete{
+    background:#c62828;
+    padding:8px 12px;
+    font-size:14px;
+}
+
+.pay{
+    background:#176b3a;
+    padding:8px 12px;
+    font-size:14px;
+}
+
+/* UDHAAR */
+
+.udhaar-total{
+    background:#fff5dc;
+    border-left:6px solid #d99a00;
+    padding:20px;
+    border-radius:12px;
+    margin-bottom:20px;
+    font-size:22px;
+    font-weight:bold;
+}
+
+.customer-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.customer-card{
+    background:#fffaf0;
+    border:2px solid #eadfbd;
+    padding:20px;
+    border-radius:14px;
+}
+
+.customer-card h3{
+    margin-bottom:12px;
+    color:#5c4700;
+}
+
+.customer-card p{
+    margin:7px 0;
+}
+
+/* ANALYSIS */
+
+.analysis-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.analysis-card{
+    padding:22px;
+    background:#f8faf9;
+    border:2px solid #dce8df;
+    border-radius:14px;
+}
+
+.analysis-card h3{
+    margin-bottom:12px;
+}
+
+.big{
+    font-size:27px;
+    font-weight:bold;
+    color:#176b3a;
+    margin-bottom:8px;
+}
+
+.analysis-card p{
+    line-height:1.5;
+}
+
+/* ALERT */
+
+.alert{
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:18px;
+    line-height:1.6;
+}
+
+.info{
+    background:#eaf4ff;
+    border-left:6px solid #1976d2;
+}
+
+.warning{
+    background:#fff6dd;
+    border-left:6px solid #e1a600;
+}
+
+.success{
+    background:#e9f6ed;
+    border-left:6px solid #176b3a;
+}
+
+/* SEASON */
+
+.season-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+}
+
+.season-card{
+    border:2px solid #dfe7e1;
+    padding:18px;
+    border-radius:14px;
+    background:white;
+}
+
+.icon{
+    font-size:40px;
+    margin-bottom:8px;
+}
+
+.season-card h3{
+    margin-bottom:7px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1100px){
+
+    .dashboard{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .report-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .form-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .customer-grid,
+    .analysis-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .season-grid{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media(max-width:700px){
+
+    body{
+        font-size:17px;
+    }
+
+    .header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:8px;
+        padding:20px;
+    }
+
+    .container{
+        width:96%;
+    }
+
+    .dashboard{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .form-grid,
+    .report-grid,
+    .customer-grid,
+    .analysis-grid{
+        grid-template-columns:1fr;
+    }
+
+    .season-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .section{
+        padding:20px;
+    }
+
+    .section-title{
+        font-size:23px;
+    }
+
+    .number{
+        font-size:24px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+    <div class="logo">🍎 Fruit Business Manager</div>
+    <div id="today"></div>
+</header>
+
+<div class="container">
+
+<!-- =====================================================
+     MAIN DASHBOARD
+===================================================== -->
+
+<div class="dashboard">
+
+    <div class="card">
+        <h3>💰 Total Sales</h3>
+        <div class="number" id="totalSales">₹0</div>
+    </div>
+
+    <div class="card">
+        <h3>⚖️ Total Fruit Sold</h3>
+        <div class="number" id="totalKg">0 kg</div>
+    </div>
+
+    <div class="card">
+        <h3>💵 Money Received</h3>
+        <div class="number" id="totalReceived">₹0</div>
+    </div>
+
+    <div class="card">
+        <h3>📒 Total Udhaar</h3>
+        <div class="number" id="totalUdhaar">₹0</div>
+    </div>
+
+    <div class="card">
+        <h3>💸 Total Expenses</h3>
+        <div class="number" id="totalExpenses">₹0</div>
+    </div>
+
+    <div class="card">
+        <h3>📈 Total Profit</h3>
+        <div class="number" id="totalProfit">₹0</div>
+    </div>
+
+    <div class="card">
+        <h3>📦 Stock Value</h3>
+        <div class="number" id="stockValue">₹0</div>
+    </div>
+
+    <div class="card">
+        <h3>👥 Customers</h3>
+        <div class="number" id="customerCount">0</div>
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     DAY / MONTH REPORT
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        📊 Sales Report
+    </div>
+
+    <div class="period-buttons">
+
+        <button
+            id="todayBtn"
+            class="active"
+            onclick="showPeriod('today')">
+            📅 Today
+        </button>
+
+        <button
+            id="weekBtn"
+            onclick="showPeriod('week')">
+            📆 This Week
+        </button>
+
+        <button
+            id="monthBtn"
+            onclick="showPeriod('month')">
+            🗓️ This Month
+        </button>
+
+        <button
+            id="allBtn"
+            onclick="showPeriod('all')">
+            📊 All Time
+        </button>
+
+    </div>
+
+
+    <div class="report-grid">
+
+        <div class="report-card">
+            <h3>💰 Sales</h3>
+            <div class="report-number" id="periodSales">
+                ₹0
+            </div>
+        </div>
+
+        <div class="report-card">
+            <h3>⚖️ Fruit Sold</h3>
+            <div class="report-number" id="periodKg">
+                0 kg
+            </div>
+        </div>
+
+        <div class="report-card">
+            <h3>📈 Profit</h3>
+            <div class="report-number" id="periodProfit">
+                ₹0
+            </div>
+        </div>
+
+        <div class="report-card">
+            <h3>💸 Expenses</h3>
+            <div class="report-number" id="periodExpense">
+                ₹0
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ADD SALE
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        🛒 Add Customer Sale
+    </div>
+
+    <div class="alert info">
+        <b>Example:</b>
+        Ramesh ne 5 kg Mango liya ₹500 ka.
+        ₹300 diye aur ₹200 udhaar rakha.
+    </div>
+
+    <div class="form-grid">
+
+        <div class="input-group">
+            <label>👤 Customer Name</label>
+            <input
+                id="customer"
+                type="text"
+                placeholder="Customer ka naam">
+        </div>
+
+        <div class="input-group">
+            <label>🍎 Fruit</label>
+
+            <select id="fruit">
+                <option value="">Select Fruit</option>
+                <option>Mango</option>
+                <option>Banana</option>
+                <option>Apple</option>
+                <option>Orange</option>
+                <option>Watermelon</option>
+                <option>Muskmelon</option>
+                <option>Grapes</option>
+                <option>Litchi</option>
+                <option>Papaya</option>
+                <option>Guava</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>⚖️ Quantity (KG)</label>
+            <input
+                id="quantity"
+                type="number"
+                placeholder="Example: 5">
+        </div>
+
+        <div class="input-group">
+            <label>💰 Total Bill (₹)</label>
+            <input
+                id="amount"
+                type="number"
+                placeholder="Example: 500">
+        </div>
+
+        <div class="input-group">
+            <label>💵 Customer Paid (₹)</label>
+            <input
+                id="paid"
+                type="number"
+                placeholder="Example: 300">
+        </div>
+
+        <div class="input-group">
+            <label>📦 Fruit Purchase Cost (₹)</label>
+            <input
+                id="cost"
+                type="number"
+                placeholder="Example: 350">
+        </div>
+
+    </div>
+
+    <button class="full-btn" onclick="addSale()">
+        ✅ SAVE SALE
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     DAILY SALES DETAILS
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        📅 Day-by-Day Sales
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Customers</th>
+                    <th>Fruit Sold</th>
+                    <th>KG</th>
+                    <th>Sales</th>
+                    <th>Received</th>
+                    <th>Udhaar</th>
+                    <th>Profit</th>
+                </tr>
+            </thead>
+
+            <tbody id="dailyTable"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SALE HISTORY
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        📋 Complete Sale History
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Customer</th>
+                    <th>Fruit</th>
+                    <th>KG</th>
+                    <th>Bill</th>
+                    <th>Paid</th>
+                    <th>Udhaar</th>
+                    <th>Profit</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="salesTable"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     UDHAAR
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        📒 Customer Udhaar
+    </div>
+
+    <div class="udhaar-total">
+        Total Udhaar:
+        <span id="udhaarBig">₹0</span>
+    </div>
+
+    <div class="customer-grid" id="customerUdhaar"></div>
+
+</div>
+
+
+<!-- =====================================================
+     EXPENSE
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        💸 Business Expenses
+    </div>
+
+    <div class="form-grid">
+
+        <div class="input-group">
+            <label>Expense Type</label>
+
+            <select id="expenseType">
+                <option value="">Select Expense</option>
+                <option>🚚 Transport</option>
+                <option>🏪 Shop Rent</option>
+                <option>👷 Labour</option>
+                <option>📦 Packing</option>
+                <option>💡 Electricity</option>
+                <option>📢 Marketing</option>
+                <option>🧹 Cleaning</option>
+                <option>🔧 Maintenance</option>
+                <option>📝 Other</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Amount (₹)</label>
+            <input
+                id="expenseAmount"
+                type="number"
+                placeholder="Example: 500">
+        </div>
+
+        <div class="input-group">
+            <label>Note</label>
+            <input
+                id="expenseNote"
+                type="text"
+                placeholder="Example: Tempo">
+        </div>
+
+    </div>
+
+    <button class="full-btn" onclick="addExpense()">
+        💾 SAVE EXPENSE
+    </button>
+
+</div>
+
+
+<!-- =====================================================
+     EXPENSE HISTORY
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        🧾 Expense History
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Type</th>
+                    <th>Note</th>
+                    <th>Amount</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="expenseTable"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     STOCK
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        📦 Fruit Stock
+    </div>
+
+    <div class="form-grid">
+
+        <div class="input-group">
+            <label>Fruit</label>
+
+            <select id="stockFruit">
+                <option value="">Select Fruit</option>
+                <option>Mango</option>
+                <option>Banana</option>
+                <option>Apple</option>
+                <option>Orange</option>
+                <option>Watermelon</option>
+                <option>Muskmelon</option>
+                <option>Grapes</option>
+                <option>Litchi</option>
+                <option>Papaya</option>
+                <option>Guava</option>
+            </select>
+        </div>
+
+        <div class="input-group">
+            <label>Quantity (KG)</label>
+            <input
+                id="stockQuantity"
+                type="number"
+                placeholder="Example: 100">
+        </div>
+
+        <div class="input-group">
+            <label>Purchase Price / KG</label>
+            <input
+                id="stockPrice"
+                type="number"
+                placeholder="Example: 60">
+        </div>
+
+    </div>
+
+    <button class="full-btn" onclick="addStock()">
+        📦 ADD STOCK
+    </button>
+
+
+    <div class="table-wrapper" style="margin-top:25px">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Fruit</th>
+                    <th>Available KG</th>
+                    <th>Purchase ₹/KG</th>
+                    <th>Value</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+
+            <tbody id="stockTable"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     BUSINESS ANALYSIS
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        🤖 Business Analysis
+    </div>
+
+    <div class="analysis-grid">
+
+        <div class="analysis-card">
+            <h3>🏆 Best Selling Fruit</h3>
+            <div class="big" id="bestFruit">-</div>
+            <p id="bestFruitText">-</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>👑 Top Customer</h3>
+            <div class="big" id="bestCustomer">-</div>
+            <p id="bestCustomerText">-</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>📅 Best Month</h3>
+            <div class="big" id="bestMonth">-</div>
+            <p id="bestMonthText">-</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>⚖️ Average Sale</h3>
+            <div class="big" id="averageSale">₹0</div>
+            <p>Average bill per sale.</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>🥇 Most KG Sold</h3>
+            <div class="big" id="mostKgFruit">-</div>
+            <p id="mostKgText">-</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>💡 Business Advice</h3>
+            <div class="big" id="businessAdvice">-</div>
+            <p id="businessAdviceText">-</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SEASON
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        🌦️ Season Analysis
+    </div>
+
+    <div class="analysis-grid">
+
+        <div class="analysis-card">
+            <h3>🌱 Current Season</h3>
+            <div class="big" id="currentSeason">-</div>
+            <p id="currentSeasonText">-</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>📈 Season Best Seller</h3>
+            <div class="big" id="seasonBest">-</div>
+            <p id="seasonBestText">-</p>
+        </div>
+
+        <div class="analysis-card">
+            <h3>🔮 Next Focus</h3>
+            <div class="big" id="nextFocus">-</div>
+            <p id="nextFocusText">-</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     SEASON CALENDAR
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        🗓️ Fruit Season Calendar
+    </div>
+
+    <div class="season-grid">
+
+        <div class="season-card">
+            <div class="icon">🥭</div>
+            <h3>Mango</h3>
+            <p>April – July</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍉</div>
+            <h3>Watermelon</h3>
+            <p>March – June</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍈</div>
+            <h3>Muskmelon</h3>
+            <p>March – June</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍒</div>
+            <h3>Litchi</h3>
+            <p>May – June</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍇</div>
+            <h3>Grapes</h3>
+            <p>December – April</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍊</div>
+            <h3>Orange</h3>
+            <p>November – March</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍎</div>
+            <h3>Apple</h3>
+            <p>August – November</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍌</div>
+            <h3>Banana</h3>
+            <p>Year Round</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍐</div>
+            <h3>Guava</h3>
+            <p>Multiple Seasons</p>
+        </div>
+
+        <div class="season-card">
+            <div class="icon">🍈</div>
+            <h3>Papaya</h3>
+            <p>Year Round</p>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MONTHLY REPORT
+===================================================== -->
+
+<div class="section">
+
+    <div class="section-title">
+        🗓️ Month-wise Fruit Sales
+    </div>
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>Month</th>
+                    <th>Fruit</th>
+                    <th>KG Sold</th>
+                    <th>Sales</th>
+                    <th>Profit</th>
+                </tr>
+            </thead>
+
+            <tbody id="monthlyTable"></tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let sales =
+JSON.parse(localStorage.getItem("fruitSales")) || [];
+
+let expenses =
+JSON.parse(localStorage.getItem("fruitExpenses")) || [];
+
+let stocks =
+JSON.parse(localStorage.getItem("fruitStocks")) || [];
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+document.getElementById("today").innerText =
+new Date().toLocaleDateString(
+    "en-IN",
+    {
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+    }
+);
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function save(){
+
+    localStorage.setItem(
+        "fruitSales",
+        JSON.stringify(sales)
+    );
+
+    localStorage.setItem(
+        "fruitExpenses",
+        JSON.stringify(expenses)
+    );
+
+    localStorage.setItem(
+        "fruitStocks",
+        JSON.stringify(stocks)
+    );
+}
+
+
+/* =====================================================
+   ADD SALE
+===================================================== */
+
+function addSale(){
+
+    let customer =
+    document.getElementById("customer").value.trim();
+
+    let fruit =
+    document.getElementById("fruit").value;
+
+    let quantity =
+    Number(document.getElementById("quantity").value);
+
+    let amount =
+    Number(document.getElementById("amount").value);
+
+    let paid =
+    Number(document.getElementById("paid").value);
+
+    let cost =
+    Number(document.getElementById("cost").value);
+
+
+    if(
+        !customer ||
+        !fruit ||
+        quantity <= 0 ||
+        amount <= 0
+    ){
+
+        alert("Customer, fruit, quantity aur bill enter karein.");
+
+        return;
+    }
+
+
+    if(paid > amount){
+
+        alert("Paid amount bill se zyada nahi ho sakta.");
+
+        return;
+    }
+
+
+    sales.push({
+
+        id:Date.now(),
+
+        date:new Date().toISOString(),
+
+        customer,
+
+        fruit,
+
+        quantity,
+
+        amount,
+
+        paid,
+
+        udhaar:amount-paid,
+
+        cost
+
+    });
+
+
+    save();
+
+
+    document.getElementById("customer").value="";
+    document.getElementById("fruit").value="";
+    document.getElementById("quantity").value="";
+    document.getElementById("amount").value="";
+    document.getElementById("paid").value="";
+    document.getElementById("cost").value="";
+
+
+    updateAll();
+
+    alert("Sale successfully saved.");
+
+}
+
+
+/* =====================================================
+   DELETE SALE
+===================================================== */
+
+function deleteSale(id){
+
+    if(!confirm("Kya ye sale delete karni hai?")){
+        return;
+    }
+
+    sales =
+    sales.filter(
+        sale => sale.id !== id
+    );
+
+    save();
+    updateAll();
+}
+
+
+/* =====================================================
+   ADD EXPENSE
+===================================================== */
+
+function addExpense(){
+
+    let type =
+    document.getElementById("expenseType").value;
+
+    let amount =
+    Number(
+        document.getElementById("expenseAmount").value
+    );
+
+    let note =
+    document.getElementById("expenseNote").value;
+
+
+    if(!type || amount <= 0){
+
+        alert("Expense type aur amount enter karein.");
+
+        return;
+    }
+
+
+    expenses.push({
+
+        id:Date.now(),
+
+        date:new Date().toISOString(),
+
+        type,
+
+        amount,
+
+        note
+
+    });
+
+
+    save();
+
+
+    document.getElementById("expenseType").value="";
+    document.getElementById("expenseAmount").value="";
+    document.getElementById("expenseNote").value="";
+
+
+    updateAll();
+
+    alert("Expense saved.");
+
+}
+
+
+/* =====================================================
+   DELETE EXPENSE
+===================================================== */
+
+function deleteExpense(id){
+
+    if(!confirm("Kya ye expense delete karna hai?")){
+        return;
+    }
+
+    expenses =
+    expenses.filter(
+        expense => expense.id !== id
+    );
+
+    save();
+    updateAll();
+}
+
+
+/* =====================================================
+   ADD STOCK
+===================================================== */
+
+function addStock(){
+
+    let fruit =
+    document.getElementById("stockFruit").value;
+
+    let quantity =
+    Number(
+        document.getElementById("stockQuantity").value
+    );
+
+    let price =
+    Number(
+        document.getElementById("stockPrice").value
+    );
+
+
+    if(!fruit || quantity <= 0 || price <= 0){
+
+        alert("Fruit, quantity aur price enter karein.");
+
+        return;
+    }
+
+
+    let existing =
+    stocks.find(
+        stock => stock.fruit === fruit
+    );
+
+
+    if(existing){
+
+        existing.quantity += quantity;
+        existing.price = price;
+
+    }else{
+
+        stocks.push({
+
+            id:Date.now(),
+
+            fruit,
+
+            quantity,
+
+            price
+
+        });
+
+    }
+
+
+    save();
+
+
+    document.getElementById("stockFruit").value="";
+    document.getElementById("stockQuantity").value="";
+    document.getElementById("stockPrice").value="";
+
+
+    updateAll();
+
+}
+
+
+/* =====================================================
+   DELETE STOCK
+===================================================== */
+
+function deleteStock(id){
+
+    stocks =
+    stocks.filter(
+        stock => stock.id !== id
+    );
+
+    save();
+    updateAll();
+}
+
+
+/* =====================================================
+   TOTAL DASHBOARD
+===================================================== */
+
+function updateDashboard(){
+
+    let totalSales=0;
+    let totalKg=0;
+    let totalReceived=0;
+    let totalUdhaar=0;
+    let totalCost=0;
+    let totalExpense=0;
+    let stockValue=0;
+
+
+    sales.forEach(sale => {
+
+        totalSales += sale.amount;
+        totalKg += sale.quantity;
+        totalReceived += sale.paid;
+        totalUdhaar += sale.udhaar;
+        totalCost += sale.cost || 0;
+
+    });
+
+
+    expenses.forEach(expense => {
+
+        totalExpense += expense.amount;
+
+    });
+
+
+    stocks.forEach(stock => {
+
+        stockValue +=
+        stock.quantity * stock.price;
+
+    });
+
+
+    let profit =
+    totalSales -
+    totalCost -
+    totalExpense;
+
+
+    document.getElementById("totalSales").innerText =
+    "₹"+totalSales.toLocaleString();
+
+    document.getElementById("totalKg").innerText =
+    totalKg.toLocaleString()+" kg";
+
+    document.getElementById("totalReceived").innerText =
+    "₹"+totalReceived.toLocaleString();
+
+    document.getElementById("totalUdhaar").innerText =
+    "₹"+totalUdhaar.toLocaleString();
+
+    document.getElementById("udhaarBig").innerText =
+    "₹"+totalUdhaar.toLocaleString();
+
+    document.getElementById("totalExpenses").innerText =
+    "₹"+totalExpense.toLocaleString();
+
+    document.getElementById("totalProfit").innerText =
+    "₹"+profit.toLocaleString();
+
+    document.getElementById("stockValue").innerText =
+    "₹"+stockValue.toLocaleString();
+
+
+    let customers =
+    new Set(
+        sales.map(
+            sale =>
+            sale.customer.toLowerCase()
+        )
+    );
+
+
+    document.getElementById("customerCount").innerText =
+    customers.size;
+
+}
+
+
+/* =====================================================
+   PERIOD REPORT
+===================================================== */
+
+let selectedPeriod="today";
+
+
+function isSameDay(date){
+
+    let now=new Date();
+
+    return (
+        date.getDate()===now.getDate() &&
+        date.getMonth()===now.getMonth() &&
+        date.getFullYear()===now.getFullYear()
+    );
+}
+
+
+function isThisWeek(date){
+
+    let now=new Date();
+
+    let start=new Date(now);
+
+    start.setDate(
+        now.getDate()-now.getDay()
+    );
+
+    start.setHours(0,0,0,0);
+
+    return date >= start && date <= now;
+}
+
+
+function isThisMonth(date){
+
+    let now=new Date();
+
+    return (
+        date.getMonth()===now.getMonth() &&
+        date.getFullYear()===now.getFullYear()
+    );
+}
+
+
+function showPeriod(period){
+
+    selectedPeriod=period;
+
+
+    document
+    .querySelectorAll(".period-buttons button")
+    .forEach(btn =>
+        btn.classList.remove("active")
+    );
+
+
+    if(period==="today"){
+        document.getElementById("todayBtn")
+        .classList.add("active");
+    }
+
+    if(period==="week"){
+        document.getElementById("weekBtn")
+        .classList.add("active");
+    }
+
+    if(period==="month"){
+        document.getElementById("monthBtn")
+        .classList.add("active");
+    }
+
+    if(period==="all"){
+        document.getElementById("allBtn")
+        .classList.add("active");
+    }
+
+
+    let filteredSales =
+    sales.filter(sale => {
+
+        let date=new Date(sale.date);
+
+        if(period==="today")
+            return isSameDay(date);
+
+        if(period==="week")
+            return isThisWeek(date);
+
+        if(period==="month")
+            return isThisMonth(date);
+
+        return true;
+
+    });
+
+
+    let filteredExpenses =
+    expenses.filter(expense => {
+
+        let date=new Date(expense.date);
+
+        if(period==="today")
+            return isSameDay(date);
+
+        if(period==="week")
+            return isThisWeek(date);
+
+        if(period==="month")
+            return isThisMonth(date);
+
+        return true;
+
+    });
+
+
+    let sale=0;
+    let kg=0;
+    let cost=0;
+    let expense=0;
+
+
+    filteredSales.forEach(item => {
+
+        sale += item.amount;
+        kg += item.quantity;
+        cost += item.cost || 0;
+
+    });
+
+
+    filteredExpenses.forEach(item => {
+
+        expense += item.amount;
+
+    });
+
+
+    let profit =
+    sale-cost-expense;
+
+
+    document.getElementById("periodSales").innerText =
+    "₹"+sale.toLocaleString();
+
+    document.getElementById("periodKg").innerText =
+    kg.toLocaleString()+" kg";
+
+    document.getElementById("periodProfit").innerText =
+    "₹"+profit.toLocaleString();
+
+    document.getElementById("periodExpense").innerText =
+    "₹"+expense.toLocaleString();
+
+}
+
+
+/* =====================================================
+   SALES TABLE
+===================================================== */
+
+function updateSalesTable(){
+
+    let table =
+    document.getElementById("salesTable");
+
+    table.innerHTML="";
+
+
+    sales
+    .slice()
+    .reverse()
+    .forEach(sale => {
+
+        let profit =
+        sale.amount -
+        (sale.cost || 0);
+
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>
+                ${new Date(sale.date)
+                .toLocaleDateString("en-IN")}
+            </td>
+
+            <td>
+                <b>${sale.customer}</b>
+            </td>
+
+            <td>${sale.fruit}</td>
+
+            <td>
+                <b>${sale.quantity} kg</b>
+            </td>
+
+            <td>
+                ₹${sale.amount.toLocaleString()}
+            </td>
+
+            <td>
+                ₹${sale.paid.toLocaleString()}
+            </td>
+
+            <td>
+                ₹${sale.udhaar.toLocaleString()}
+            </td>
+
+            <td>
+                ₹${profit.toLocaleString()}
+            </td>
+
+            <td>
+
+                <button
+                    class="delete"
+                    onclick="deleteSale(${sale.id})">
+                    Delete
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   DAILY REPORT
+===================================================== */
+
+function updateDailyReport(){
+
+    let data={};
+
+
+    sales.forEach(sale => {
+
+        let date =
+        new Date(sale.date)
+        .toLocaleDateString("en-IN");
+
+
+        if(!data[date]){
+
+            data[date]={
+                customers:new Set(),
+                fruits:new Set(),
+                kg:0,
+                sales:0,
+                received:0,
+                udhaar:0,
+                profit:0
+            };
+
+        }
+
+
+        data[date].customers.add(
+            sale.customer
+        );
+
+        data[date].fruits.add(
+            sale.fruit
+        );
+
+        data[date].kg +=
+        sale.quantity;
+
+        data[date].sales +=
+        sale.amount;
+
+        data[date].received +=
+        sale.paid;
+
+        data[date].udhaar +=
+        sale.udhaar;
+
+        data[date].profit +=
+        sale.amount -
+        (sale.cost || 0);
+
+    });
+
+
+    let table =
+    document.getElementById("dailyTable");
+
+    table.innerHTML="";
+
+
+    Object.keys(data)
+    .reverse()
+    .forEach(date => {
+
+        let item=data[date];
+
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td><b>${date}</b></td>
+
+            <td>
+                ${item.customers.size}
+            </td>
+
+            <td>
+                ${Array.from(item.fruits).join(", ")}
+            </td>
+
+            <td>
+                ${item.kg} kg
+            </td>
+
+            <td>
+                ₹${item.sales.toLocaleString()}
+            </td>
+
+            <td>
+                ₹${item.received.toLocaleString()}
+            </td>
+
+            <td>
+                ₹${item.udhaar.toLocaleString()}
+            </td>
+
+            <td>
+                ₹${item.profit.toLocaleString()}
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   CUSTOMER UDHAAR
+===================================================== */
+
+function updateUdhaar(){
+
+    let customers={};
+
+
+    sales.forEach(sale => {
+
+        if(!customers[sale.customer]){
+
+            customers[sale.customer]={
+                kg:0,
+                bill:0,
+                paid:0,
+                udhaar:0
+            };
+
+        }
+
+
+        customers[sale.customer].kg +=
+        sale.quantity;
+
+        customers[sale.customer].bill +=
+        sale.amount;
+
+        customers[sale.customer].paid +=
+        sale.paid;
+
+        customers[sale.customer].udhaar +=
+        sale.udhaar;
+
+    });
+
+
+    let container =
+    document.getElementById("customerUdhaar");
+
+    container.innerHTML="";
+
+
+    Object.entries(customers)
+    .filter(
+        ([name,data]) =>
+        data.udhaar > 0
+    )
+    .forEach(([name,data]) => {
+
+        container.innerHTML += `
+
+        <div class="customer-card">
+
+            <h3>👤 ${name}</h3>
+
+            <p>
+                ⚖️ Total Fruit:
+                <b>${data.kg} kg</b>
+            </p>
+
+            <p>
+                💰 Total Bill:
+                ₹${data.bill.toLocaleString()}
+            </p>
+
+            <p>
+                💵 Paid:
+                ₹${data.paid.toLocaleString()}
+            </p>
+
+            <p>
+                📒 <b>Udhaar:
+                ₹${data.udhaar.toLocaleString()}</b>
+            </p>
+
+            <button
+                class="pay"
+                onclick="receivePayment('${name}')">
+
+                💵 Receive Payment
+
+            </button>
+
+        </div>
+
+        `;
+
+    });
+
+
+    if(container.innerHTML===""){
+
+        container.innerHTML=
+        `<div class="alert success">
+            ✅ Kisi customer par abhi udhaar nahi hai.
+        </div>`;
+
+    }
+
+}
+
+
+/* =====================================================
+   RECEIVE PAYMENT
+===================================================== */
+
+function receivePayment(name){
+
+    let amount =
+    Number(
+        prompt(
+            name+
+            " se kitna payment mila?"
+        )
+    );
+
+
+    if(!amount || amount<=0){
+        return;
+    }
+
+
+    let remaining=amount;
+
+
+    for(let sale of sales){
+
+        if(
+            sale.customer===name &&
+            sale.udhaar>0 &&
+            remaining>0
+        ){
+
+            let payment =
+            Math.min(
+                sale.udhaar,
+                remaining
+            );
+
+
+            sale.udhaar -= payment;
+
+            sale.paid += payment;
+
+            remaining -= payment;
+
+        }
+
+    }
+
+
+    save();
+    updateAll();
+
+
+    alert("Payment received successfully.");
+
+}
+
+
+/* =====================================================
+   EXPENSE TABLE
+===================================================== */
+
+function updateExpenseTable(){
+
+    let table =
+    document.getElementById("expenseTable");
+
+    table.innerHTML="";
+
+
+    expenses
+    .slice()
+    .reverse()
+    .forEach(expense => {
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>
+                ${new Date(expense.date)
+                .toLocaleDateString("en-IN")}
+            </td>
+
+            <td>${expense.type}</td>
+
+            <td>${expense.note || "-"}</td>
+
+            <td>
+                <b>
+                ₹${expense.amount.toLocaleString()}
+                </b>
+            </td>
+
+            <td>
+
+                <button
+                    class="delete"
+                    onclick="deleteExpense(${expense.id})">
+
+                    Delete
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   STOCK TABLE
+===================================================== */
+
+function updateStockTable(){
+
+    let table =
+    document.getElementById("stockTable");
+
+    table.innerHTML="";
+
+
+    stocks.forEach(stock => {
+
+        let value =
+        stock.quantity *
+        stock.price;
+
+
+        let status =
+        stock.quantity<=10
+        ? "⚠️ Low Stock"
+        : "✅ Good";
+
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td><b>${stock.fruit}</b></td>
+
+            <td>${stock.quantity} kg</td>
+
+            <td>₹${stock.price}</td>
+
+            <td>₹${value.toLocaleString()}</td>
+
+            <td>${status}</td>
+
+            <td>
+
+                <button
+                    class="delete"
+                    onclick="deleteStock(${stock.id})">
+
+                    Delete
+
+                </button>
+
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   BUSINESS ANALYSIS
+===================================================== */
+
+function updateAnalysis(){
+
+    if(sales.length===0){
+        return;
+    }
+
+
+    let fruits={};
+
+
+    sales.forEach(sale => {
+
+        if(!fruits[sale.fruit]){
+            fruits[sale.fruit]=0;
+        }
+
+        fruits[sale.fruit] +=
+        sale.quantity;
+
+    });
+
+
+    let bestFruit =
+    Object.keys(fruits)
+    .sort(
+        (a,b) =>
+        fruits[b]-fruits[a]
+    )[0];
+
+
+    document.getElementById("bestFruit").innerText =
+    bestFruit;
+
+    document.getElementById("bestFruitText").innerText =
+    fruits[bestFruit]+" kg sold";
+
+
+    /* CUSTOMER */
+
+    let customers={};
+
+
+    sales.forEach(sale => {
+
+        if(!customers[sale.customer]){
+            customers[sale.customer]=0;
+        }
+
+        customers[sale.customer] +=
+        sale.amount;
+
+    });
+
+
+    let bestCustomer =
+    Object.keys(customers)
+    .sort(
+        (a,b) =>
+        customers[b]-customers[a]
+    )[0];
+
+
+    document.getElementById("bestCustomer").innerText =
+    bestCustomer;
+
+    document.getElementById("bestCustomerText").innerText =
+    "Purchase ₹"+
+    customers[bestCustomer].toLocaleString();
+
+
+    /* MONTH */
+
+    let months={};
+
+
+    sales.forEach(sale => {
+
+        let month =
+        new Date(sale.date)
+        .toLocaleString(
+            "en-IN",
+            {month:"long"}
+        );
+
+
+        if(!months[month]){
+            months[month]=0;
+        }
+
+        months[month] +=
+        sale.quantity;
+
+    });
+
+
+    let bestMonth =
+    Object.keys(months)
+    .sort(
+        (a,b) =>
+        months[b]-months[a]
+    )[0];
+
+
+    document.getElementById("bestMonth").innerText =
+    bestMonth;
+
+    document.getElementById("bestMonthText").innerText =
+    months[bestMonth]+" kg sold";
+
+
+    /* AVERAGE */
+
+    let average =
+    sales.reduce(
+        (sum,sale)=>
+        sum+sale.amount,
+        0
+    ) / sales.length;
+
+
+    document.getElementById("averageSale").innerText =
+    "₹"+
+    Math.round(average).toLocaleString();
+
+
+    document.getElementById("mostKgFruit").innerText =
+    bestFruit;
+
+    document.getElementById("mostKgText").innerText =
+    fruits[bestFruit]+" kg";
+
+
+    document.getElementById("businessAdvice").innerText =
+    "Focus: "+bestFruit;
+
+    document.getElementById("businessAdviceText").innerText =
+    bestFruit+
+    " aapka highest-selling fruit hai. Iska stock aur demand monitor karein.";
+
+}
+
+
+/* =====================================================
+   SEASON
+===================================================== */
+
+const seasonData={
+
+    Mango:[4,7],
+    Watermelon:[3,6],
+    Muskmelon:[3,6],
+    Litchi:[5,6],
+    Grapes:[12,4],
+    Orange:[11,3],
+    Apple:[8,11],
+    Banana:[1,12],
+    Papaya:[1,12],
+    Guava:[7,12]
+
+};
+
+
+function updateSeason(){
+
+    let month =
+    new Date().getMonth()+1;
+
+
+    let current=[];
+
+
+    Object.entries(seasonData)
+    .forEach(([fruit,range])=>{
+
+        let start=range[0];
+        let end=range[1];
+
+
+        if(start<=end){
+
+            if(
+                month>=start &&
+                month<=end
+            ){
+                current.push(fruit);
+            }
+
+        }else{
+
+            if(
+                month>=start ||
+                month<=end
+            ){
+                current.push(fruit);
+            }
+
+        }
+
+    });
+
+
+    document.getElementById("currentSeason").innerText =
+    current.join(", ");
+
+
+    document.getElementById("currentSeasonText").innerText =
+    "Abhi in fruits ka season hai.";
+
+
+    let seasonSales={};
+
+
+    sales.forEach(sale=>{
+
+        if(current.includes(sale.fruit)){
+
+            if(!seasonSales[sale.fruit]){
+                seasonSales[sale.fruit]=0;
+            }
+
+            seasonSales[sale.fruit]+=sale.quantity;
+
+        }
+
+    });
+
+
+    let keys=Object.keys(seasonSales);
+
+
+    if(keys.length){
+
+        let best =
+        keys.sort(
+            (a,b)=>
+            seasonSales[b]-
+            seasonSales[a]
+        )[0];
+
+
+        document.getElementById("seasonBest").innerText =
+        best;
+
+        document.getElementById("seasonBestText").innerText =
+        seasonSales[best]+" kg sold";
+
+    }
+
+
+    let next;
+
+
+    if(month<=3){
+        next="Mango + Watermelon";
+    }
+    else if(month<=6){
+        next="Mango + Litchi";
+    }
+    else if(month<=9){
+        next="Apple + Guava";
+    }
+    else{
+        next="Orange + Grapes";
+    }
+
+
+    document.getElementById("nextFocus").innerText =
+    next;
+
+    document.getElementById("nextFocusText").innerText =
+    "Aane wale season ke liye demand monitor karein.";
+
+}
+
+
+/* =====================================================
+   MONTHLY REPORT
+===================================================== */
+
+function updateMonthly(){
+
+    let data={};
+
+
+    sales.forEach(sale=>{
+
+        let date=new Date(sale.date);
+
+        let month=date.toLocaleString(
+            "en-IN",
+            {month:"long"}
+        );
+
+        let key=
+        month+"-"+sale.fruit;
+
+
+        if(!data[key]){
+
+            data[key]={
+                month,
+                fruit:sale.fruit,
+                kg:0,
+                sales:0,
+                cost:0
+            };
+
+        }
+
+
+        data[key].kg +=
+        sale.quantity;
+
+        data[key].sales +=
+        sale.amount;
+
+        data[key].cost +=
+        sale.cost || 0;
+
+    });
+
+
+    let table =
+    document.getElementById("monthlyTable");
+
+    table.innerHTML="";
+
+
+    Object.values(data)
+    .sort(
+        (a,b)=>
+        b.kg-a.kg
+    )
+    .forEach(item=>{
+
+        let profit =
+        item.sales-item.cost;
+
+
+        table.innerHTML += `
+
+        <tr>
+
+            <td>${item.month}</td>
+
+            <td><b>${item.fruit}</b></td>
+
+            <td>${item.kg} kg</td>
+
+            <td>
+                ₹${item.sales.toLocaleString()}
+            </td>
+
+            <td>
+                ₹${profit.toLocaleString()}
+            </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* =====================================================
+   UPDATE ALL
+===================================================== */
+
+function updateAll(){
+
+    updateDashboard();
+
+    showPeriod(selectedPeriod);
+
+    updateSalesTable();
+
+    updateDailyReport();
+
+    updateUdhaar();
+
+    updateExpenseTable();
+
+    updateStockTable();
+
+    updateAnalysis();
+
+    updateSeason();
+
+    updateMonthly();
+
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+updateAll();
+
+</script>
+
+</body>
+</html>
+```

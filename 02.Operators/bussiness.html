@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fruit Business Manager</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7f6;
+            color: #222;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: #168c45;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h1 {
+            font-size: 24px;
+        }
+
+        .navbar span {
+            font-size: 14px;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            margin: 25px auto;
+        }
+
+        /* DASHBOARD */
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            font-size: 15px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .card h2 {
+            font-size: 25px;
+        }
+
+        .green {
+            color: #168c45;
+        }
+
+        .red {
+            color: #e53935;
+        }
+
+        .orange {
+            color: #f57c00;
+        }
+
+        .blue {
+            color: #1976d2;
+        }
+
+        /* SECTIONS */
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.07);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+        }
+
+        /* BUTTON */
+
+        button {
+            border: none;
+            padding: 10px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .btn-green {
+            background: #168c45;
+            color: white;
+        }
+
+        .btn-red {
+            background: #e53935;
+            color: white;
+        }
+
+        .btn-blue {
+            background: #1976d2;
+            color: white;
+        }
+
+        /* TABLE */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        th {
+            background: #f1f5f2;
+        }
+
+        /* FORM */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 11px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #168c45;
+        }
+
+        .full {
+            grid-column: 1 / -1;
+        }
+
+        /* SEARCH */
+
+        .search {
+            width: 300px;
+        }
+
+        /* STATUS */
+
+        .paid {
+            color: #168c45;
+            font-weight: bold;
+        }
+
+        .due {
+            color: #e53935;
+            font-weight: bold;
+        }
+
+        /* RESPONSIVE */
+
+        @media(max-width: 900px) {
+
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media(max-width: 600px) {
+
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 15px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+            .search {
+                width: 100%;
+            }
+
+            table {
+                font-size: 12px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <div class="navbar">
+
+        <h1>🍎 Fruit Business Manager</h1>
+
+        <span id="date"></span>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <!-- DASHBOARD -->
+
+        <div class="dashboard">
+
+            <div class="card">
+
+                <h3>Total Sales</h3>
+
+                <h2 class="green">
+                    ₹<span id="totalSales">0</span>
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Total Expenses</h3>
+
+                <h2 class="red">
+                    ₹<span id="totalExpenses">0</span>
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Remaining Money</h3>
+
+                <h2 class="blue">
+                    ₹<span id="remainingMoney">0</span>
+                </h2>
+
+            </div>
+
+
+            <div class="card">
+
+                <h3>Total Customer Udhaar</h3>
+
+                <h2 class="orange">
+                    ₹<span id="totalDue">0</span>
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- ADD SALE -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>🧾 Add Sale</h2>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>Customer Name</label>
+
+                    <input
+                        type="text"
+                        id="customerName"
+                        placeholder="Customer name"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Fruit</label>
+
+                    <input
+                        type="text"
+                        id="saleFruit"
+                        placeholder="e.g. Apple"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Quantity</label>
+
+                    <input
+                        type="number"
+                        id="saleQuantity"
+                        placeholder="Quantity"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Total Amount</label>
+
+                    <input
+                        type="number"
+                        id="saleAmount"
+                        placeholder="₹ Amount"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Customer Paid</label>
+
+                    <input
+                        type="number"
+                        id="salePaid"
+                        placeholder="₹ Paid"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Payment Type</label>
+
+                    <select id="paymentType">
+
+                        <option value="cash">Cash</option>
+
+                        <option value="online">Online</option>
+
+                        <option value="udhaar">Udhaar</option>
+
+                    </select>
+
+                </div>
+
+
+                <div style="display:flex;align-items:end;">
+
+                    <button
+                        class="btn-green"
+                        onclick="addSale()"
+                    >
+                        Add Sale
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- SALES TABLE -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>📋 Sales History</h2>
+
+                <input
+                    class="search"
+                    type="text"
+                    placeholder="Search customer..."
+                    onkeyup="searchSales(this.value)"
+                >
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Customer</th>
+
+                        <th>Fruit</th>
+
+                        <th>Qty</th>
+
+                        <th>Total</th>
+
+                        <th>Paid</th>
+
+                        <th>Udhaar</th>
+
+                        <th>Payment</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="salesTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- CUSTOMER UDHAAR -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>📒 Customer Udhaar</h2>
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Customer</th>
+
+                        <th>Total Purchase</th>
+
+                        <th>Total Paid</th>
+
+                        <th>Remaining Udhaar</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="customerTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- ADD EXPENSE -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>💸 Add Expense</h2>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>Expense Name</label>
+
+                    <input
+                        type="text"
+                        id="expenseName"
+                        placeholder="Transport / Rent / etc."
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Amount</label>
+
+                    <input
+                        type="number"
+                        id="expenseAmount"
+                        placeholder="₹ Amount"
+                    >
+
+                </div>
+
+
+                <div style="display:flex;align-items:end;">
+
+                    <button
+                        class="btn-red"
+                        onclick="addExpense()"
+                    >
+                        Add Expense
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- EXPENSE TABLE -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>💰 Expense History</h2>
+
+            </div>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Expense</th>
+
+                        <th>Amount</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="expenseTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+
+        <!-- INVENTORY -->
+
+        <div class="section">
+
+            <div class="section-header">
+
+                <h2>🍊 Fruit Inventory</h2>
+
+                <button
+                    class="btn-green"
+                    onclick="addFruit()"
+                >
+                    Add Fruit
+                </button>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <div>
+
+                    <label>Fruit Name</label>
+
+                    <input
+                        type="text"
+                        id="fruitName"
+                        placeholder="Mango"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Quantity</label>
+
+                    <input
+                        type="number"
+                        id="fruitQuantity"
+                        placeholder="50"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Purchase Price</label>
+
+                    <input
+                        type="number"
+                        id="purchasePrice"
+                        placeholder="₹"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <label>Selling Price</label>
+
+                    <input
+                        type="number"
+                        id="sellingPrice"
+                        placeholder="₹"
+                    >
+
+                </div>
+
+            </div>
+
+
+            <br>
+
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Fruit</th>
+
+                        <th>Quantity</th>
+
+                        <th>Purchase Price</th>
+
+                        <th>Selling Price</th>
+
+                        <th>Profit / Unit</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody id="inventoryTable">
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+
+    </div>
+
+
+
+<script>
+
+
+    // DATA
+
+    let sales =
+        JSON.parse(localStorage.getItem("sales")) || [];
+
+    let expenses =
+        JSON.parse(localStorage.getItem("expenses")) || [];
+
+    let inventory =
+        JSON.parse(localStorage.getItem("inventory")) || [];
+
+
+
+    // DATE
+
+    document.getElementById("date").innerText =
+        new Date().toLocaleDateString();
+
+
+
+    // ADD SALE
+
+    function addSale() {
+
+        let customer =
+            document.getElementById("customerName").value;
+
+        let fruit =
+            document.getElementById("saleFruit").value;
+
+        let quantity =
+            Number(document.getElementById("saleQuantity").value);
+
+        let amount =
+            Number(document.getElementById("saleAmount").value);
+
+        let paid =
+            Number(document.getElementById("salePaid").value);
+
+        let payment =
+            document.getElementById("paymentType").value;
+
+
+        if (
+            customer === "" ||
+            fruit === "" ||
+            quantity <= 0 ||
+            amount <= 0
+        ) {
+
+            alert("Please fill all sale details");
+
+            return;
+
+        }
+
+
+        if (paid > amount) {
+
+            alert("Paid amount cannot be greater than total amount");
+
+            return;
+
+        }
+
+
+        let due = amount - paid;
+
+
+        sales.push({
+
+            customer,
+            fruit,
+            quantity,
+            amount,
+            paid,
+            due,
+            payment
+
+        });
+
+
+        saveData();
+
+        displaySales();
+
+        displayCustomers();
+
+        updateDashboard();
+
+
+        document.getElementById("customerName").value = "";
+
+        document.getElementById("saleFruit").value = "";
+
+        document.getElementById("saleQuantity").value = "";
+
+        document.getElementById("saleAmount").value = "";
+
+        document.getElementById("salePaid").value = "";
+
+    }
+
+
+
+    // DISPLAY SALES
+
+    function displaySales(data = sales) {
+
+        let table =
+            document.getElementById("salesTable");
+
+        table.innerHTML = "";
+
+
+        data.forEach((sale, index) => {
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>${sale.customer}</td>
+
+                    <td>${sale.fruit}</td>
+
+                    <td>${sale.quantity}</td>
+
+                    <td>₹${sale.amount}</td>
+
+                    <td>₹${sale.paid}</td>
+
+                    <td class="due">
+                        ₹${sale.due}
+                    </td>
+
+                    <td>
+                        ${sale.payment}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn-red"
+                            onclick="deleteSale(${index})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+    }
+
+
+
+    // SEARCH SALES
+
+    function searchSales(value) {
+
+        let result =
+            sales.filter(sale =>
+                sale.customer
+                .toLowerCase()
+                .includes(value.toLowerCase())
+            );
+
+        displaySales(result);
+
+    }
+
+
+
+    // DELETE SALE
+
+    function deleteSale(index) {
+
+        if (confirm("Delete this sale?")) {
+
+            sales.splice(index, 1);
+
+            saveData();
+
+            displaySales();
+
+            displayCustomers();
+
+            updateDashboard();
+
+        }
+
+    }
+
+
+
+    // CUSTOMER UDHAAR
+
+    function displayCustomers() {
+
+        let customers = {};
+
+
+        sales.forEach(sale => {
+
+            if (!customers[sale.customer]) {
+
+                customers[sale.customer] = {
+
+                    total: 0,
+                    paid: 0,
+                    due: 0
+
+                };
+
+            }
+
+
+            customers[sale.customer].total +=
+                sale.amount;
+
+            customers[sale.customer].paid +=
+                sale.paid;
+
+            customers[sale.customer].due +=
+                sale.due;
+
+        });
+
+
+        let table =
+            document.getElementById("customerTable");
+
+        table.innerHTML = "";
+
+
+        Object.keys(customers).forEach(customer => {
+
+            let data =
+                customers[customer];
+
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>${customer}</td>
+
+                    <td>₹${data.total}</td>
+
+                    <td>₹${data.paid}</td>
+
+                    <td class="due">
+                        ₹${data.due}
+                    </td>
+
+                    <td>
+
+                        ${
+                            data.due > 0
+                            ?
+                            `<button
+                                class="btn-blue"
+                                onclick="receivePayment('${customer}')"
+                            >
+                                Receive Payment
+                            </button>`
+                            :
+                            `<span class="paid">Paid</span>`
+                        }
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+    }
+
+
+
+    // RECEIVE UDHAAR PAYMENT
+
+    function receivePayment(customer) {
+
+        let amount =
+            Number(
+                prompt(
+                    "Enter payment received from " + customer
+                )
+            );
+
+
+        if (!amount || amount <= 0) {
+
+            return;
+
+        }
+
+
+        let remaining = amount;
+
+
+        for (let sale of sales) {
+
+            if (
+                sale.customer === customer &&
+                sale.due > 0
+            ) {
+
+                let payment =
+                    Math.min(remaining, sale.due);
+
+                sale.paid += payment;
+
+                sale.due -= payment;
+
+                remaining -= payment;
+
+
+                if (remaining <= 0) {
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+
+        saveData();
+
+        displaySales();
+
+        displayCustomers();
+
+        updateDashboard();
+
+    }
+
+
+
+    // ADD EXPENSE
+
+    function addExpense() {
+
+        let name =
+            document.getElementById("expenseName").value;
+
+        let amount =
+            Number(
+                document.getElementById("expenseAmount").value
+            );
+
+
+        if (name === "" || amount <= 0) {
+
+            alert("Enter valid expense");
+
+            return;
+
+        }
+
+
+        expenses.push({
+
+            name,
+            amount
+
+        });
+
+
+        saveData();
+
+        displayExpenses();
+
+        updateDashboard();
+
+
+        document.getElementById("expenseName").value = "";
+
+        document.getElementById("expenseAmount").value = "";
+
+    }
+
+
+
+    // DISPLAY EXPENSES
+
+    function displayExpenses() {
+
+        let table =
+            document.getElementById("expenseTable");
+
+        table.innerHTML = "";
+
+
+        expenses.forEach((expense, index) => {
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>${expense.name}</td>
+
+                    <td>₹${expense.amount}</td>
+
+                    <td>
+
+                        <button
+                            class="btn-red"
+                            onclick="deleteExpense(${index})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+    }
+
+
+
+    // DELETE EXPENSE
+
+    function deleteExpense(index) {
+
+        expenses.splice(index, 1);
+
+        saveData();
+
+        displayExpenses();
+
+        updateDashboard();
+
+    }
+
+
+
+    // ADD FRUIT
+
+    function addFruit() {
+
+        let name =
+            document.getElementById("fruitName").value;
+
+        let quantity =
+            Number(
+                document.getElementById("fruitQuantity").value
+            );
+
+        let purchase =
+            Number(
+                document.getElementById("purchasePrice").value
+            );
+
+        let selling =
+            Number(
+                document.getElementById("sellingPrice").value
+            );
+
+
+        if (
+            name === "" ||
+            quantity <= 0 ||
+            purchase <= 0 ||
+            selling <= 0
+        ) {
+
+            alert("Enter valid inventory details");
+
+            return;
+
+        }
+
+
+        inventory.push({
+
+            name,
+            quantity,
+            purchase,
+            selling
+
+        });
+
+
+        saveData();
+
+        displayInventory();
+
+
+        document.getElementById("fruitName").value = "";
+
+        document.getElementById("fruitQuantity").value = "";
+
+        document.getElementById("purchasePrice").value = "";
+
+        document.getElementById("sellingPrice").value = "";
+
+    }
+
+
+
+    // DISPLAY INVENTORY
+
+    function displayInventory() {
+
+        let table =
+            document.getElementById("inventoryTable");
+
+        table.innerHTML = "";
+
+
+        inventory.forEach((fruit, index) => {
+
+            let profit =
+                fruit.selling - fruit.purchase;
+
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>${fruit.name}</td>
+
+                    <td>${fruit.quantity}</td>
+
+                    <td>₹${fruit.purchase}</td>
+
+                    <td>₹${fruit.selling}</td>
+
+                    <td class="green">
+                        ₹${profit}
+                    </td>
+
+                    <td>
+
+                        <button
+                            class="btn-red"
+                            onclick="deleteFruit(${index})"
+                        >
+                            Delete
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        });
+
+    }
+
+
+
+    // DELETE FRUIT
+
+    function deleteFruit(index) {
+
+        inventory.splice(index, 1);
+
+        saveData();
+
+        displayInventory();
+
+    }
+
+
+
+    // DASHBOARD
+
+    function updateDashboard() {
+
+        let totalSales = 0;
+
+        let totalPaid = 0;
+
+        let totalDue = 0;
+
+        let totalExpenses = 0;
+
+
+        sales.forEach(sale => {
+
+            totalSales += sale.amount;
+
+            totalPaid += sale.paid;
+
+            totalDue += sale.due;
+
+        });
+
+
+        expenses.forEach(expense => {
+
+            totalExpenses += expense.amount;
+
+        });
+
+
+        let remainingMoney =
+            totalPaid - totalExpenses;
+
+
+        document.getElementById("totalSales")
+            .innerText = totalSales;
+
+
+        document.getElementById("totalExpenses")
+            .innerText = totalExpenses;
+
+
+        document.getElementById("remainingMoney")
+            .innerText = remainingMoney;
+
+
+        document.getElementById("totalDue")
+            .innerText = totalDue;
+
+    }
+
+
+
+    // SAVE DATA
+
+    function saveData() {
+
+        localStorage.setItem(
+            "sales",
+            JSON.stringify(sales)
+        );
+
+        localStorage.setItem(
+            "expenses",
+            JSON.stringify(expenses)
+        );
+
+        localStorage.setItem(
+            "inventory",
+            JSON.stringify(inventory)
+        );
+
+    }
+
+
+
+    // INITIAL LOAD
+
+    displaySales();
+
+    displayCustomers();
+
+    displayExpenses();
+
+    displayInventory();
+
+    updateDashboard();
+
+
+</script>
+
+</body>
+</html>
